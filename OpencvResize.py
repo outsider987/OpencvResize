@@ -98,7 +98,8 @@ class Ui_Dialog(object):
 
 
     def AspectRatio(self,iWidth,iHeight):
-        img = cv2.imdecode(self.InputEdit.displayText(),cv2.IMREAD_COLOR)
+        SrcPath = self.InputEdit.text()
+        img = cv2.imdecode(np.fromfile(SrcPath,dtype=np.uint8),cv2.IMREAD_COLOR)
         height, width = img.shape[:2]  
 
         LargeEdge = iWidth if iWidth > iHeight else iHeight
@@ -120,24 +121,13 @@ class Ui_Dialog(object):
 
 
     def OnOk(self):
-         
-        img = cv2.imdecode(self.InputEdit.displayText(),cv2.IMREAD_COLOR)
-        height, width = img.shape[:2]  
+        SrcPath = self.InputEdit.text()
+        img = cv2.imdecode(np.fromfile(SrcPath,dtype=np.uint8),cv2.IMREAD_COLOR)
+        
+        img = cv2.resize(img,(self.WidthBox.value(),self.HeightBox.value()))
+        
+        cv2.imwrite(self.lineEdit.text(),img)
 
-        ratio=1.0
-
-        # True if self.WidthBox. == 'Apple' else False
-
-        # LargeEdge = 1200
-        # if height>width:
-        #     ratio = height/LargeEdge
-        #     height=LargeEdge
-        #     width = width/ratio
-
-        # else:
-        #     ratio = width/LargeEdge
-        #     width =LargeEdge
-        #     height = height/ratio
     
     
         
