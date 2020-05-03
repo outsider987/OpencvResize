@@ -82,9 +82,9 @@ class Ui_Dialog(object):
             return
         else:
             self.InputEdit.setText(srcpath[0])
-            test = self.InputEdit.text()
+            SrcPath = self.InputEdit.text()
 
-            img=cv2.imdecode(np.fromfile(test,dtype=np.uint8),-1)
+            img=cv2.imdecode(np.fromfile(SrcPath,dtype=np.uint8),-1)
             height, width = img.shape[:2]
             self.WidthBox.setValue(width)
             self.HeightBox.setValue(height)
