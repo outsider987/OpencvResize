@@ -12,7 +12,9 @@ import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 import cv2
-
+import tkinter
+import tkinter.messagebox
+from PyQt5.QtCore import QTimer
 
 
 
@@ -29,13 +31,22 @@ class Ui_Dialog(object):
         self.WidthBox = QtWidgets.QSpinBox(Dialog)
         self.WidthBox.setGeometry(QtCore.QRect(30, 30, 101, 22))
         self.WidthBox.setRange(0,40000)
-        
+        # self.WidthBox.valueChanged.connect(QTimer.startTimer(500, self.AspectRatio))
         self.WidthBox.setObjectName("WidthBox")
 
         self.HeightBox = QtWidgets.QSpinBox(Dialog)
         self.HeightBox.setGeometry(QtCore.QRect(30, 80, 101, 22))
         self.HeightBox.setObjectName("HeightBox")
         self.HeightBox.setRange(0,40000)
+        # self.HeightBox.valueChanged.connect(QTimer.startTimer(500, self.AspectRatio))
+        
+      
+        self.AspectRatioButton = QtWidgets.QRadioButton(Dialog)
+        self.AspectRatioButton.setGeometry(QtCore.QRect(240, 30,150, 16))
+        self.AspectRatioButton.setObjectName("radioButton")
+        self.AspectRatioButton.setText("AspectRatio Check")
+        # self.AspectRatio.setGeometry(QtCore.QRect(70, 80, 101, 22))
+        # self.AspectRatio.setObjectName("AspectRatioBox")
 
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(30, 10, 47, 12))
@@ -78,7 +89,7 @@ class Ui_Dialog(object):
     def openfile(self):
         srcpath = QFileDialog.getOpenFileName()
         
-        if srcpath == None:
+        if srcpath[0] == '':
             return
         else:
             self.InputEdit.setText(srcpath[0])
@@ -91,42 +102,59 @@ class Ui_Dialog(object):
             
     def savefile(self):
         # QFileDialog.(None,'save file',os.getcwd(),"Images (*.png *.xpm *.jpg)")
-        srcpath = QFileDialog.getExistingDirectory(None,"Select Floder...","");  
-        srcpath +="/Ouput.png"
+        srcpath = QFileDialog.getExistingDirectory(None,"Select Floder...","");
+        if  srcpath == '':
+            return
+        else:
+            srcpath +="/Ouput.png"
+
         # srcpath = QFileDialog.getExistingDirectory(None,'Choose a directory ''for saving the ''peaks','\home') 
         self.lineEdit.setText(srcpath)
 
 
-    def AspectRatio(self,iWidth,iHeight):
-        SrcPath = self.InputEdit.text()
-        img = cv2.imdecode(np.fromfile(SrcPath,dtype=np.uint8),cv2.IMREAD_COLOR)
-        height, width = img.shape[:2]  
+    def AspectRatio(self):
+        
+        if self.AspectRatioButton.isChecked():
+            SrcPath = self.InputEdit.text()
+            img = cv2.imdecode(np.fromfile(SrcPath,dtype=np.uint8),cv2.IMREAD_COLOR)
+            height, width = img.shape[:2]  
 
-        LargeEdge = iWidth if iWidth > iHeight else iHeight
-        ratio=1.0
+            LargeEdge = self.WidthBox.value() if self.WidthBox.value() > self.HeightBox.value() else self.HeightBox.value()
+            ratio=1.0
 
-        if height>width:
-            ratio = height/LargeEdge
-            height=LargeEdge
-            width = width/ratio
+            if height>width:
+                ratio = height/LargeEdge
+                height=LargeEdge
+                width = width/ratio
 
+            else:
+                ratio = width/LargeEdge
+                width =LargeEdge
+                height = height/ratio
+
+            self.WidthBox.setValue(width)
+            self.HeightBox.setValue(height)
         else:
-            ratio = width/LargeEdge
-            width =LargeEdge
-            height = height/ratio
-
-        self.WidthBox.setValue(width)
-        self.HeightBox.setValue(height)
+            return
         
 
 
     def OnOk(self):
         SrcPath = self.InputEdit.text()
+        if SrcPath == '':
+            tkinter.messagebox.showinfo('Finish','Your image is resize down/n')
+            
+            # tkinter.messagebox.OK('Finish','Your image is resize down/n')
+            return
+
         img = cv2.imdecode(np.fromfile(SrcPath,dtype=np.uint8),cv2.IMREAD_COLOR)
         
         img = cv2.resize(img,(self.WidthBox.value(),self.HeightBox.value()))
         
         cv2.imwrite(self.lineEdit.text(),img)
+        tkinter.messagebox.showinfo('Finish','Your image is resize down/n')
+        return
+
 
     
     
