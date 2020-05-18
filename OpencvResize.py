@@ -31,6 +31,8 @@ class Ui_Dialog(object):
         self.WidthBox = QtWidgets.QSpinBox(Dialog)
         self.WidthBox.setGeometry(QtCore.QRect(30, 30, 101, 22))
         self.WidthBox.setRange(0,40000)
+        self.WidthBox.editingFinished.connect(self.AspectRatio)
+        # self.WidthBox.setKeyboardTracking(False)
         # self.WidthBox.valueChanged.connect(QTimer.startTimer(500, self.AspectRatio))
         self.WidthBox.setObjectName("WidthBox")
 
@@ -38,6 +40,8 @@ class Ui_Dialog(object):
         self.HeightBox.setGeometry(QtCore.QRect(30, 80, 101, 22))
         self.HeightBox.setObjectName("HeightBox")
         self.HeightBox.setRange(0,40000)
+        self.HeightBox.editingFinished.connect(self.AspectRatio)
+        # self.HeightBox.setKeyboardTracking(False)
         # self.HeightBox.valueChanged.connect(QTimer.startTimer(500, self.AspectRatio))
         
       
