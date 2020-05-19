@@ -7,7 +7,7 @@ Here is a easy way to resize your img tool
 3.install **opencv**`pip install opencv-python`<br>
 
 ## UI Design <br>
-python designer is a easy way to produce your own UI<br> 
+python designer is a quickly and easy way to produce your own UI ,So I use it to produce <br> 
 
 ## Content <br>
 1.AS picture you can see pick up you want resize img and your output path <br>
