@@ -11,4 +11,4 @@ python designer is a easy way to produce your own UI<br>
 
 ## Content <br>
 Like you can see in the picture <br>
- 
+![image](https://github.com/outsider987/OpencvResize/Sample.PNG)
