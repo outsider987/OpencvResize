@@ -10,5 +10,6 @@ Here is a easy way to resize your img tool
 python designer is a easy way to produce your own UI<br> 
 
 ## Content <br>
-Like you can see in the picture <br>
-![image](https://github.com/outsider987/OpencvResize/Sample.PNG)
+1.AS picture you can see pick up you want resize img and your output path <br>
+2.Aspect ratio will keep your original size to resize your img<br>
+![image](https://github.com/outsider987/OpencvResize/blob/master/Sample.PNG)<br>
